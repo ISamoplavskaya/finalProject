@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-sequence" author="iryna" context="text">
+        <createSequence sequenceName="user_id_seq"/>
+    </changeSet>
+    <changeSet id="create-users-table" author="iryna" context="text">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="users">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(255)">
+                <constraints checkConstraint="role IN ('ROLE_USER','ROLE_PREMIUM','ROLE_ADMIN')" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-friends-table" author="iryna" context="text">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="friends"/>
+            </not>
+        </preConditions>
+        <createTable tableName="friends">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birthday" type="date"/>
+            <column name="user_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-foreign-key-constraint" author="iryna" context="text">
+        <addForeignKeyConstraint baseTableName="friends"
+                                 baseColumnNames="user_id"
+                                 constraintName="FKlh21lfp7th1y1tn9g63ihkda"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="create-gift-ideas-table" author="your_name" context="text">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="gift_ideas"/>
+            </not>
+        </preConditions>
+        <createTable tableName="gift_ideas">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="gift_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="float">
+                <constraints nullable="true"/>
+            </column>
+            <column name="friend_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-foreign-key-constraint-gift-ideas" author="your_name" context="text">
+        <addForeignKeyConstraint baseTableName="gift_ideas"
+                                 baseColumnNames="friend_id"
+                                 constraintName="FK6tak1vok4u1ma1fmapflpwcx"
+                                 referencedTableName="friends"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

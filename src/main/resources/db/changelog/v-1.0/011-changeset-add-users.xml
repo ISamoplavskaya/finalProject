@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="insert-user-data" author="iryna">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*)
+                                         FROM users</sqlCheck>
+        </preConditions>
+        <sql>
+            INSERT INTO users (username, email, password, role)
+            VALUES ('admin', 'admin@example.com', '$2a$10$bmDLosRlTq4kZjSpdlvupOe0.ST.x5/1L2PNReUf1pWU6kqmzooby', 'ROLE_ADMIN'),
+                   ('iryna', 'isamolavskaya@gmail.com', '$2a$10$bmDLosRlTq4kZjSpdlvupOe0.ST.x5/1L2PNReUf1pWU6kqmzooby', 'ROLE_USER'),
+                   ('alex', 'alex@example.com', '$2a$10$bmDLosRlTq4kZjSpdlvupOe0.ST.x5/1L2PNReUf1pWU6kqmzooby', 'ROLE_PREMIUM');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

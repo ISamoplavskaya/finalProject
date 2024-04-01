@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="insert-friend-data" author="iryna">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*)
+                                         FROM friends</sqlCheck>
+        </preConditions>
+        <sql>
+            INSERT INTO friends (name, birthday, user_id)
+            VALUES ('Pavel Orlov', '2002-01-16', 2),
+                   ('Olga Bogdanuk',  CURRENT_DATE + INTERVAL '1 DAY', 2),
+                   ('Anna Grinchuk',  CURRENT_DATE + INTERVAL '1 DAY', 2),
+                   ('Anna Novitskaya', '1986-10-12', 2),
+                   ('Vadim Karputs', '1992-06-14', 3),
+                   ('Gleb Goncharenko', '1996-06-24', 3);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

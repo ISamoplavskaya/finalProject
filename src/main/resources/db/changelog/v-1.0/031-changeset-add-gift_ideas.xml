@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="insert-gift_ideas-data" author="iryna">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*)
+                                         FROM gift_ideas</sqlCheck>
+        </preConditions>
+        <sql>
+            INSERT INTO gift_ideas (gift_name, price,description, friend_id)
+            VALUES  ('Flower bouquet', 25.99, 'Beautiful arrangement of flowers',1),
+                    ('Smartphone', 699.99, 'Latest model with advanced features',1),
+                    ('Handmade jewelry', 49.99, 'Unique piece crafted by local artist',1),
+                    ('Gourmet chocolate box', 19.99, 'Assortment of premium chocolates',2),
+                    ('Coffee machine', 149.99, 'Espresso maker with frother',2),
+                    ('Customized photo album', 34.99, 'Personalized album for memories',2),
+                    ('Fitness tracker', 79.99, 'Track activity and monitor health',3),
+                    ('Cookbook set', 29.99, 'Collection of popular recipes',3),
+                    ('Subscription box', 29.99, 'Monthly surprise box with curated items',3),
+                    ('Spa gift basket', 89.99, 'Luxury spa products for relaxation',4),
+                    ('Board games collection', 39.99, 'Assorted board games for game nights',4),
+                    ('Travel voucher', 200.00, 'Gift card for travel experiences',4),
+                    ('Outdoor grill', 299.99, 'Barbecue grill for outdoor cooking',5),
+                    ('Fancy watch', 149.99, 'Elegant timepiece for everyday wear',5),
+                    ('Art supplies set', 49.99, 'Complete set for creative projects',5),
+                    ('Wireless earbuds', 129.99, 'High-quality audio with Bluetooth connectivity',6),
+                    ('Home decor items', 39.99, 'Assorted decorative pieces for home',6),
+                    ('Wine tasting experience', 99.99, 'Guided wine tasting session at local winery',6);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
