@@ -23,7 +23,7 @@ public class BirthdayReminderScheduler {
 
 
     //    @Scheduled(cron = "0 0 0 * * ?") // запускати о 00:00 щодня
-      @Scheduled(fixedDelay = 20L, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 20L, timeUnit = TimeUnit.MINUTES)
     public void remindFriendsAboutBirthdays() {
         log.info("Starting birthday reminder scheduler");
         List<User> users = userService.getAllUsers();
@@ -35,7 +35,6 @@ public class BirthdayReminderScheduler {
             }
         }
     }
-
 
     public void sendBirthdayNotification(User user, List<Friend> friends) {
         log.info("Sending birthday notification to user: {}", user.getUsername());

@@ -1,4 +1,4 @@
-package ua.com.finalproject.exeptionHandler;
+package ua.com.finalproject.exeption.exeptionHandler;
 
 import jakarta.servlet.ServletException;
 import org.springframework.http.HttpStatus;

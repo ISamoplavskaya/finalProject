@@ -13,7 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ua.com.finalproject.dto.FriendDTO;
+import ua.com.finalproject.dto.FriendDto;
 import ua.com.finalproject.entity.Friend;
 import ua.com.finalproject.service.FriendService;
 import ua.com.finalproject.service.JwtService;
@@ -50,10 +50,10 @@ public class FriendControllerTests {
     @WithMockUser(username = "testUser")
     public void testGetUserFriends_ReturnsAllFriends() throws Exception {
         List<Friend> friends = Arrays.asList(new Friend(), new Friend());
-        List<FriendDTO> friendDTOS = Arrays.asList(new FriendDTO(), new FriendDTO());
+        List<FriendDto> friendDTOS = Arrays.asList(new FriendDto(), new FriendDto());
         when(friendService.getUserFriends(any())).thenReturn(friends);
         for (int i = 0; i < friends.size(); i++) {
-            when(modelMapper.map(friends.get(i), FriendDTO.class)).thenReturn(friendDTOS.get(i));
+            when(modelMapper.map(friends.get(i), FriendDto.class)).thenReturn(friendDTOS.get(i));
         }
         mockMvc.perform(get("/api/v1/friends")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -64,7 +64,7 @@ public class FriendControllerTests {
     @Test
     @WithMockUser(username = "testUser")
     public void testAddFriend() throws Exception {
-        FriendDTO friendDTO = new FriendDTO();
+        FriendDto friendDTO = new FriendDto();
         friendDTO.setName("friend1");
         Friend friend = ObjectUtils.getFriend("friend1", null);
         when(modelMapper.map(friendDTO, Friend.class)).thenReturn(friend);
@@ -80,13 +80,13 @@ public class FriendControllerTests {
     @WithMockUser(username = "testUser")
     public void testUpdateFriend() throws Exception {
         Long friendId = 1L;
-        FriendDTO updatedFriendDTO = new FriendDTO();
+        FriendDto updatedFriendDTO = new FriendDto();
         updatedFriendDTO.setName("friend2");
 
         Friend friend = ObjectUtils.getFriend("friend1", null);
         friend.setId(friendId);
         when(friendService.getById(friendId)).thenReturn(friend);
-        when(modelMapper.map(friend, FriendDTO.class)).thenReturn(updatedFriendDTO);
+        when(modelMapper.map(friend, FriendDto.class)).thenReturn(updatedFriendDTO);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/api/v1/friends/{friendId}", 1L)

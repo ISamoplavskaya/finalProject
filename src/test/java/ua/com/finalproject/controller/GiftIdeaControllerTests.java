@@ -12,7 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ua.com.finalproject.dto.GiftIdeaDTO;
+import ua.com.finalproject.dto.GiftIdeaDto;
 import ua.com.finalproject.entity.GiftIdea;
 import ua.com.finalproject.service.FriendService;
 import ua.com.finalproject.service.GiftIdeaService;
@@ -51,21 +51,21 @@ public class GiftIdeaControllerTests {
     public void testGetFriendGiftIdea_ReturnsAllGiftIdeas() throws Exception {
         Long friendId = 1L;
         List<GiftIdea> giftIdeas = Arrays.asList(new GiftIdea(), new GiftIdea());
-        List<GiftIdeaDTO> giftIdeaDTOS = Arrays.asList(new GiftIdeaDTO(), new GiftIdeaDTO());
+        List<GiftIdeaDto> giftIdeaDtos = Arrays.asList(new GiftIdeaDto(), new GiftIdeaDto());
         when(giftIdeaService.getFriendGiftIdeas(friendId)).thenReturn(giftIdeas);
         for (int i = 0; i < giftIdeas.size(); i++) {
-            when(modelMapper.map(giftIdeas.get(i), GiftIdeaDTO.class)).thenReturn(giftIdeaDTOS.get(i));
+            when(modelMapper.map(giftIdeas.get(i), GiftIdeaDto.class)).thenReturn(giftIdeaDtos.get(i));
         }
         mockMvc.perform(get("/api/v1/friends/{friendId}/giftIdeas", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(giftIdeaDTOS.size()));
+                .andExpect(jsonPath("$.length()").value(giftIdeaDtos.size()));
     }
 
     @Test
     public void testAddGiftIdea() throws Exception {
         Long friendId = 1L;
-        GiftIdeaDTO giftIdeaDTO = new GiftIdeaDTO();
+        GiftIdeaDto giftIdeaDTO = new GiftIdeaDto();
         giftIdeaDTO.setGiftName("gift1");
         GiftIdea giftIdea = ObjectUtils.getGiftIdea("gift1", null);
 
@@ -82,13 +82,13 @@ public class GiftIdeaControllerTests {
     public void testUpdateGiftIdea() throws Exception {
         Long friendId = 1L;
         Long giftIdeaId = 2L;
-        GiftIdeaDTO updatedGiftIdeaDto = new GiftIdeaDTO();
+        GiftIdeaDto updatedGiftIdeaDto = new GiftIdeaDto();
         updatedGiftIdeaDto.setGiftName("giftIdea1");
 
         GiftIdea giftIdea = ObjectUtils.getGiftIdea("giftIdea2", null);
         giftIdea.setId(giftIdeaId);
         when(giftIdeaService.getById(giftIdeaId)).thenReturn(giftIdea);
-        when(modelMapper.map(giftIdea, GiftIdeaDTO.class)).thenReturn(updatedGiftIdeaDto);
+        when(modelMapper.map(giftIdea, GiftIdeaDto.class)).thenReturn(updatedGiftIdeaDto);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/api/v1/friends/{friendId}/giftIdeas/{giftIdeaId}", friendId, giftIdeaId)

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.finalproject.dto.GiftIdeaDTO;
+import ua.com.finalproject.dto.GiftIdeaDto;
 import ua.com.finalproject.entity.GiftIdea;
 import ua.com.finalproject.service.FriendService;
 import ua.com.finalproject.service.GiftIdeaService;
@@ -27,27 +27,27 @@ public class GiftIdeaController {
     public ResponseEntity<Object> getFriendGiftIdea(@PathVariable Long friendId) {
         log.info("Getting gift ideas for friend with id {}", friendId);
         List<GiftIdea> giftIdeas = giftIdeaService.getFriendGiftIdeas(friendId);
-        List<GiftIdeaDTO> giftIdeasDTO = giftIdeas.stream()
-                .map(giftIdea -> modelMapper.map(giftIdea, GiftIdeaDTO.class))
+        List<GiftIdeaDto> giftIdeasDto = giftIdeas.stream()
+                .map(giftIdea -> modelMapper.map(giftIdea, GiftIdeaDto.class))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(giftIdeasDTO);
+        return ResponseEntity.ok(giftIdeasDto);
     }
 
     @PostMapping
-    public ResponseEntity<Object> addGiftIdea(@PathVariable Long friendId, @RequestBody @Valid GiftIdeaDTO giftIdeaDTO) {
-        GiftIdea giftIdea = modelMapper.map(giftIdeaDTO, GiftIdea.class);
+    public ResponseEntity<Object> addGiftIdea(@PathVariable Long friendId, @RequestBody @Valid GiftIdeaDto giftIdeaDto) {
+        GiftIdea giftIdea = modelMapper.map(giftIdeaDto, GiftIdea.class);
         friendService.addFriendGiftIdea(friendId, giftIdea);
         return ResponseEntity.ok("Gift added successfully");
     }
 
     @PutMapping("/{giftIdeaId}")
-    public ResponseEntity<GiftIdeaDTO> updateGiftIdea(@PathVariable Long friendId, @PathVariable Long giftIdeaId, @RequestBody @Valid GiftIdeaDTO updatedGiftIdeaDTO) {
+    public ResponseEntity<GiftIdeaDto> updateGiftIdea(@PathVariable Long friendId, @PathVariable Long giftIdeaId, @RequestBody @Valid GiftIdeaDto updatedGiftIdeaDto) {
         log.info("Adding gift idea for friend with id {}", friendId);
         GiftIdea giftIdea = giftIdeaService.getById(giftIdeaId);
-        updatedGiftIdeaDTO.setId(giftIdeaId);
-        modelMapper.map(updatedGiftIdeaDTO, giftIdea);
+        updatedGiftIdeaDto.setId(giftIdeaId);
+        modelMapper.map(updatedGiftIdeaDto, giftIdea);
         giftIdeaService.save(giftIdea);
-        return ResponseEntity.ok(modelMapper.map(giftIdea, GiftIdeaDTO.class));
+        return ResponseEntity.ok(modelMapper.map(giftIdea, GiftIdeaDto.class));
     }
 
     @DeleteMapping("/{giftIdeaId}")

@@ -12,7 +12,7 @@ import ua.com.finalproject.entity.Role;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserDto {
     @Schema(description = "User's unique ID", example = "1")
     private Long id;
     @Schema(description = "User name", example = "Jon123")

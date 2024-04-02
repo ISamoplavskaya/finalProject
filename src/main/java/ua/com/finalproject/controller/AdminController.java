@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.finalproject.dto.UserDTO;
+import ua.com.finalproject.dto.UserDto;
 import ua.com.finalproject.entity.User;
 import ua.com.finalproject.service.UserService;
 
@@ -21,13 +21,13 @@ public class AdminController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         log.info("Fetching all users");
         List<User> users = userService.getAllUsers();
-        List<UserDTO> usersDTO = users.stream()
-                .map(user -> modelMapper.map(user, UserDTO.class))
+        List<UserDto> usersDto = users.stream()
+                .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(usersDTO);
+        return ResponseEntity.ok(usersDto);
     }
 
     @PutMapping("/users/{id}/role-{role}")

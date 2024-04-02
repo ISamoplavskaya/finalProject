@@ -1,4 +1,4 @@
-package ua.com.finalproject.exeptionHandler;
+package ua.com.finalproject.exeption.exeptionHandler;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;

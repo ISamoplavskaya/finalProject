@@ -1,4 +1,4 @@
-package ua.com.finalproject.exeptionHandler;
+package ua.com.finalproject.exeption.exeptionHandler;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

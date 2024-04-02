@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FriendDTO {
+public class FriendDto {
     @Schema(description = "Friend's unique ID", example = "1")
     private Long id;
     @Schema(description = "Friend's name", example = "John")

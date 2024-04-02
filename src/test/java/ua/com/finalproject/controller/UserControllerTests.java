@@ -15,7 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ua.com.finalproject.dto.UserDTO;
+import ua.com.finalproject.dto.UserDto;
 import ua.com.finalproject.dto.UserUpdateRequest;
 import ua.com.finalproject.entity.Role;
 import ua.com.finalproject.entity.User;
@@ -51,10 +51,10 @@ public class UserControllerTests {
     @WithMockUser(username = "testUser")
     public void testGetCurrentUser_ReturnsCurrentUserDetails() throws Exception {
         User user = ObjectUtils.getUser("testUser");
-        UserDTO userDTO = new UserDTO(1L,"testUser", "test@example.com", Role.ROLE_USER);
+        UserDto userDTO = new UserDto(1L,"testUser", "test@example.com", Role.ROLE_USER);
 
         when(userService.getByUsername(any())).thenReturn(user);
-        when(modelMapper.map(user, UserDTO.class)).thenReturn(userDTO);
+        when(modelMapper.map(user, UserDto.class)).thenReturn(userDTO);
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/v1/users/me")

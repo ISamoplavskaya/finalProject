@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class GiftIdeaDTO {
+public class GiftIdeaDto {
     @Schema(description = "Unique gift identifier", example = "1")
     private Long id;
     @Schema(description = "Gift name", example = "Flowers")

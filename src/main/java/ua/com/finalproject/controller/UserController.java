@@ -10,7 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ua.com.finalproject.dto.UserDTO;
+import ua.com.finalproject.dto.UserDto;
 import ua.com.finalproject.dto.UserUpdateRequest;
 import ua.com.finalproject.entity.User;
 import ua.com.finalproject.service.UserService;
@@ -25,11 +25,11 @@ public class UserController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/me")
-    public ResponseEntity<UserDTO> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<UserDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         log.info("Retrieving current user details for user: {}", userDetails.getUsername());
         User user = userService.getByUsername(userDetails.getUsername());
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return ResponseEntity.ok(userDTO);
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        return ResponseEntity.ok(userDto);
     }
 
     @PutMapping("/me")

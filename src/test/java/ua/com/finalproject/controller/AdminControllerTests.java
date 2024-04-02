@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ua.com.finalproject.dto.UserDTO;
+import ua.com.finalproject.dto.UserDto;
 import ua.com.finalproject.entity.User;
 import ua.com.finalproject.service.JwtService;
 import ua.com.finalproject.service.UserService;
@@ -44,15 +44,15 @@ public class AdminControllerTests {
     @Test
     void getAllUsers_ReturnsAllUsers() throws Exception {
         List<User> users = Arrays.asList(new User(), new User());
-        List<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO());
+        List<UserDto> userDtos = Arrays.asList(new UserDto(), new UserDto());
         when(userService.getAllUsers()).thenReturn(users);
         for (int i = 0; i < users.size(); i++) {
-            when(modelMapper.map(users.get(i), UserDTO.class)).thenReturn(userDTOs.get(i));
+            when(modelMapper.map(users.get(i), UserDto.class)).thenReturn(userDtos.get(i));
         }
         mockMvc.perform(get("/api/admin/users")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(userDTOs.size()));
+                .andExpect(jsonPath("$.length()").value(userDtos.size()));
 
     }
 

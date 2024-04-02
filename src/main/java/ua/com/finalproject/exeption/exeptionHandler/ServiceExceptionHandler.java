@@ -1,4 +1,4 @@
-package ua.com.finalproject.exeptionHandler;
+package ua.com.finalproject.exeption.exeptionHandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

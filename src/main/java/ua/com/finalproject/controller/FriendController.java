@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import ua.com.finalproject.dto.FriendDTO;
+import ua.com.finalproject.dto.FriendDto;
 import ua.com.finalproject.entity.Friend;
 import ua.com.finalproject.service.FriendService;
 import ua.com.finalproject.service.UserService;
@@ -29,28 +29,28 @@ public class FriendController {
     public ResponseEntity<Object> getUserFriends(@AuthenticationPrincipal UserDetails userDetails) {
         log.info("Retrieving friends for user: {}", userDetails.getUsername());
         List<Friend> friends = friendService.getUserFriends(userDetails.getUsername());
-        List<FriendDTO> friendsDTO = friends.stream()
-                .map(friend -> modelMapper.map(friend, FriendDTO.class))
+        List<FriendDto> friendsDto = friends.stream()
+                .map(friend -> modelMapper.map(friend, FriendDto.class))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(friendsDTO);
+        return ResponseEntity.ok(friendsDto);
     }
 
     @PostMapping
-    public ResponseEntity<Object> addFriend(@AuthenticationPrincipal UserDetails userDetails, @RequestBody @Valid FriendDTO friendDTO) {
+    public ResponseEntity<Object> addFriend(@AuthenticationPrincipal UserDetails userDetails, @RequestBody @Valid FriendDto friendDto) {
         log.info("Adding friend for user: {}", userDetails.getUsername());
-        Friend friend = modelMapper.map(friendDTO, Friend.class);
+        Friend friend = modelMapper.map(friendDto, Friend.class);
         userService.addUserFriend(userDetails.getUsername(), friend);
         return ResponseEntity.ok("Friend added successfully");
     }
 
     @PutMapping("/{friendId}")
-    public ResponseEntity<FriendDTO> updateFriend(@PathVariable Long friendId, @RequestBody @Valid FriendDTO updatedFriendDTO) {
+    public ResponseEntity<FriendDto> updateFriend(@PathVariable Long friendId, @RequestBody @Valid FriendDto updatedFriendDto) {
         log.info("Updating friend with ID: {}", friendId);
         Friend friend = friendService.getById(friendId);
-        updatedFriendDTO.setId(friendId);
-        modelMapper.map(updatedFriendDTO, friend);
+        updatedFriendDto.setId(friendId);
+        modelMapper.map(updatedFriendDto, friend);
         friendService.save(friend);
-        return ResponseEntity.ok(modelMapper.map(friend, FriendDTO.class));
+        return ResponseEntity.ok(modelMapper.map(friend, FriendDto.class));
     }
 
     @DeleteMapping("/{friendId}")
