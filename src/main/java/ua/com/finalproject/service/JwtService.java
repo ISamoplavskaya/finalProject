@@ -60,7 +60,7 @@ public class JwtService {
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
-                .signWith(Jwts.SIG.HS256.key().build())
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -77,13 +77,13 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         log.info("Extracting all claims from token");
         return Jwts.parser()
-                .verifyWith(getSigningKey())
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
     }
 
-    private SecretKey getSigningKey() {
+    private Key getSigningKey() {
         log.info("Getting signing key");
         byte[] keyBytes = Decoders.BASE64.decode(jwtSignetKey);
         return Keys.hmacShaKeyFor(keyBytes);
